@@ -14,7 +14,7 @@ public class Encoding {
         for (char caracter : miString.toCharArray()) {
             int vAsciiM = (int) caracter + valor;
             char caracterM = (char) vAsciiM;
-            nuevaP.append(vAsciiM);
+            nuevaP.append(caracterM);
         }
         return nuevaP.toString();
     }
