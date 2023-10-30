@@ -18,7 +18,7 @@ import java.util.HashMap;
 @RequestMapping("v1")
 public class AuthenticationService {
 
-    //messages
+    //vars
     HashMap<String, String> response = new HashMap<>();
 
     @Autowired
@@ -36,7 +36,7 @@ public class AuthenticationService {
                 response.put("message", "Sesion finalizada");
                 return ResponseEntity.ok().body(response);
             } else {
-                System.out.println("no esta");
+                System.out.println("sesion no existe");
                 return ResponseEntity.noContent().build();
             }
         }
@@ -48,16 +48,27 @@ public class AuthenticationService {
 
     @PostMapping(path = "/login")
     private ResponseEntity<HashMap<String, String>> login(@RequestBody User user) {
+        response.clear();
         if (user.getIdUser() != null && user.getPassword() != null) {
-            User userData = userRepository.findByIdUserAndPassword(user.getIdUser(), user.getPassword());
+
+            User userData = userRepository.findByIdUserAndPassword(user.getIdUser(), new Encoding().MD5(user.getPassword()) );
             if (userData != null) {
-                String session = String.valueOf(new Encoding().SessionManager());
-                userData.setSession(session);
-                userData.setFechaIngreso(new Date());
-                userRepository.save(userData);
-                response.put("token", session);
-                System.out.println(response);
-                return ResponseEntity.ok(response);
+
+                System.out.println(userData.getSession());
+                if(userData.getSession() ==null || userData.getSession().equals("")){
+                    String session = String.valueOf(new Encoding().SessionManager());
+                    userData.setSession(session);
+                    userData.setFechaIngreso(new Date());
+                    userRepository.save(userData);
+                    response.put("token", session);
+                    System.out.println(response);
+                    return ResponseEntity.ok(response);
+                }else{
+
+                    response.put("message", "Usuario cuenta con una sesion activa");
+                    return ResponseEntity.badRequest().body(response);
+                }
+
             } else {
                 System.out.println("Usuario no existe");
                 return ResponseEntity.noContent().build();

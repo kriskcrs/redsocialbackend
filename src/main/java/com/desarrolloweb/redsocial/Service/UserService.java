@@ -15,7 +15,7 @@ public class UserService {
 
     @GetMapping(path = "/md5/{text}")
     private String Md5(@PathVariable String text) {
-        return Encoding.MD5(text);
+        return new Encoding().MD5(text);
     }
 
 
