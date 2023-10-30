@@ -1,17 +1,13 @@
 package com.desarrolloweb.redsocial.Service;
 
 
-import com.desarrolloweb.redsocial.Tools.Encoding;
-import com.desarrolloweb.redsocial.Entity.Company;
 import com.desarrolloweb.redsocial.Entity.User;
-import com.desarrolloweb.redsocial.Repository.CompanyRepository;
 import com.desarrolloweb.redsocial.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.Date;
 import java.util.HashMap;
 
 
@@ -30,8 +26,6 @@ public class AuthenticationService {
 
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    CompanyRepository companyRepository;
 
 
 
@@ -41,7 +35,7 @@ public class AuthenticationService {
         if (session != null) {
             User user = userRepository.findByCurrentSession(session);
             if (user != null) {
-                user.setCurrentSession("");
+                user.setSession("");
                 userRepository.save(user);
                 response.put("code", "0");
                 response.put("message", "Sesion finalizada");
