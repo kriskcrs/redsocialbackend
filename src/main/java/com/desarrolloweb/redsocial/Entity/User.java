@@ -11,7 +11,6 @@ import java.util.Date;
 @Table(name = "usuario")
 @Getter
 @Setter
-
 public class User {
 
     @Id
@@ -23,8 +22,6 @@ public class User {
     private String apellido;
     @Column(name = "password")
     private String password;
-    @Column(name = "estado")
-    private String estado;
     @Column(name = "fecha_nacimiento")
     private Date fechaNacimiento;
     @Column(name = "session")
