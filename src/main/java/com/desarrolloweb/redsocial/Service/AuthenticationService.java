@@ -33,7 +33,7 @@ public class AuthenticationService {
     @GetMapping(path = "/revoke/{session}")
     private HashMap<String, String> logout(@PathVariable String session) {
         if (session != null) {
-            User user = userRepository.findByCurrentSession(session);
+            User user = userRepository.findBySession(session);
             if (user != null) {
                 user.setSession("");
                 userRepository.save(user);
