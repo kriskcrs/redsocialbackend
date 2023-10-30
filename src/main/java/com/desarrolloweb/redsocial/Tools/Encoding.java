@@ -1,5 +1,7 @@
 package com.desarrolloweb.redsocial.Tools;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.util.UUID;
 
 public class Encoding {
@@ -18,6 +20,9 @@ public class Encoding {
         }
         return nuevaP.toString();
     }
+        public static String calcularMD5(String input) {
+            return DigestUtils.md5Hex(input);
+        }
 
 
     public UUID SessionManager(){
