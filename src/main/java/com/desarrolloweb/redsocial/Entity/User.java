@@ -15,46 +15,21 @@ import java.util.Date;
 public class User {
 
     @Id
-    @Column(name = "idusuario")
+    @Column(name = "id_usuario")
     private String idUser;
     @Column(name = "nombre")
-    private String name;
+    private String nombre;
     @Column(name = "apellido")
-    private String lastName;
-    @Column(name = "fechanacimiento")
-    private Date dob;
-    @Column(name = "idstatususuario")
-    private Long idStatusUser;
+    private String apellido;
     @Column(name = "password")
     private String password;
-    @Column(name = "idgenero")
-    private Long idGender;
-    @Column(name = "ultimafechaingreso")
-    private Date lastDateOfEntry;
-    @Column(name = "intentosdeacceso")
-    private Integer accessAttempts;
-    @Column(name = "sesionactual")
-    private String currentSession;
-    @Column(name = "ultimafechacambiopassword")
-    private Date lastPasswordChangeDate;
-    @Column(name = "correoelectronico")
-    private String email;
-    @Column(name = "requierecambiarpassword")
-    private Integer requiresChangingPassword;
-    @Lob
-    @Column(name = "fotografia")
-    private byte[] photo;
-    @Column(name = "telefonomovil")
-    private String mobilePhone;
-    @Column(name = "idsucursal")
-    private Long idLocation;
-    @Column(name = "fechacreacion")
-    private Date creationDate;
-    @Column(name = "usuariocreacion")
-    private String userCreation;
-    @Column(name = "fechamodificacion")
-    private Date modificationDate;
-    @Column(name = "usuariomodificacion")
-    private String userModification;
+    @Column(name = "estado")
+    private String estado;
+    @Column(name = "fecha_nacimiento")
+    private Date fechaNacimiento;
+    @Column(name = "session")
+    private String session;
+    @Column(name = "fecha_ingreso")
+    private Date fechaIngreso;
 
 }
