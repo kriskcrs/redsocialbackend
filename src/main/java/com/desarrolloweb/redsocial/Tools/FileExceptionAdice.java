@@ -1,4 +1,4 @@
-package Tools;
+package com.desarrolloweb.redsocial.Tools;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

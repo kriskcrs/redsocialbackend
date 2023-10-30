@@ -1,6 +1,6 @@
-package Repository;
+package com.desarrolloweb.redsocial.Repository;
 
-import Entity.Company;
+import com.desarrolloweb.redsocial.Entity.Company;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CompanyRepository extends JpaRepository<Company,Long> {

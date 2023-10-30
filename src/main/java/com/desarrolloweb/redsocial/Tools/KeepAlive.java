@@ -1,4 +1,4 @@
-package Tools;
+package com.desarrolloweb.redsocial.Tools;
 
 public class KeepAlive {
 

@@ -8,7 +8,6 @@ public class RedsocialApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(RedsocialApplication.class, args);
-        System.out.println("hola mundo");
     }
 
 }

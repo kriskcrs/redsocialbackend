@@ -1,4 +1,4 @@
-package Tools;
+package com.desarrolloweb.redsocial.Tools;
 
 import javax.mail.*;
 import javax.mail.internet.*;
