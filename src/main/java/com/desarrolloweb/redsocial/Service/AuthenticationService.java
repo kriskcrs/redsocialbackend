@@ -60,7 +60,7 @@ public class AuthenticationService {
                     userData.setSession(session);
                     userData.setFechaIngreso(new Date());
                     userRepository.save(userData);
-                    response.put("token", session);
+                    response.put("session", session);
                     System.out.println(response);
                     return ResponseEntity.ok(response);
                 }else{
