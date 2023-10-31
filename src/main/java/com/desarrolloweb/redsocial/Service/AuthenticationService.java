@@ -1,11 +1,9 @@
 package com.desarrolloweb.redsocial.Service;
 
 
-import com.desarrolloweb.redsocial.Tools.Encoding;
-import com.desarrolloweb.redsocial.Entity.Company;
 import com.desarrolloweb.redsocial.Entity.User;
-import com.desarrolloweb.redsocial.Repository.CompanyRepository;
 import com.desarrolloweb.redsocial.Repository.UserRepository;
+import com.desarrolloweb.redsocial.Tools.Encoding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,65 +18,77 @@ import java.util.HashMap;
 @RequestMapping("v1")
 public class AuthenticationService {
 
-    //messages
-    String FailedLogin = "Usuario o contraseña incorrecta";
-    String RequiredChangePassword = "Requiere cambio de contraseña";
-    String CurrentSession = "Usuario ya cuenta con una sesión activa";
-    String StatusUser = "El usuario no se encuentra activo";
-    String FirstLogin = "Primer login";
+    //vars
     HashMap<String, String> response = new HashMap<>();
 
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    CompanyRepository companyRepository;
-
-
 
 
     @GetMapping(path = "/revoke/{session}")
-    private HashMap<String, String> logout(@PathVariable String session) {
+    private ResponseEntity<HashMap<String, String>> logout(@PathVariable String session) {
+        response.clear();
         if (session != null) {
-            User user = userRepository.findByCurrentSession(session);
+            User user = userRepository.findBySession(session);
             if (user != null) {
-                user.setCurrentSession("");
+                user.setSession("");
                 userRepository.save(user);
-                response.put("code", "0");
                 response.put("message", "Sesion finalizada");
-                return response;
+                return ResponseEntity.ok().body(response);
             } else {
-                System.out.println("no esta");
-                response.put("code", "1");
-                response.put("message", "¡Sesion no valida!");
-                return response;
+                System.out.println("sesion no existe");
+                return ResponseEntity.noContent().build();
             }
         }
-        response.put("code", "1");
-        response.put("message", "session no valida");
-        return response;
+        response.put("mesagge", "sesion no valida");
+        return ResponseEntity.badRequest().body(response);
 
     }
 
 
     @PostMapping(path = "/login")
-    private ResponseEntity<String> login(@RequestBody User user) {
+    private ResponseEntity<HashMap<String, String>> login(@RequestBody User user) {
+        response.clear();
+        if (user.getIdUser() != null && user.getPassword() != null) {
 
-        if(user.getIdUser() !=null && user.getPassword() != null){
-            System.out.println(user.getIdUser());
-            if (user.getIdUser().equals("admin") && user.getPassword().equals("admin")) {
-                return ResponseEntity.ok("exitoso");
+            User userData = userRepository.findByIdUserAndPassword(user.getIdUser(), new Encoding().MD5(user.getPassword()) );
+            if (userData != null) {
+
+                System.out.println(userData.getSession());
+                if(userData.getSession() ==null || userData.getSession().equals("")){
+                    String session = String.valueOf(new Encoding().SessionManager());
+                    userData.setSession(session);
+                    userData.setFechaIngreso(new Date());
+                    userRepository.save(userData);
+                    response.put("session", session);
+                    System.out.println(response);
+                    return ResponseEntity.ok(response);
+                }else{
+
+                    response.put("message", "Usuario cuenta con una sesion activa");
+                    return ResponseEntity.badRequest().body(response);
+                }
+
             } else {
+                System.out.println("Usuario no existe");
                 return ResponseEntity.noContent().build();
             }
-        }else{
-            return ResponseEntity.badRequest().body("Valores incorrectos");
+        } else {
+            response.put("Error", "Parametros incorrectos");
+            return ResponseEntity.badRequest().body(response);
         }
-
-
-
     }
 
 
-
+    @GetMapping(path = "/dataUser/{session}")
+    private ResponseEntity<User> dataUser(@PathVariable String session) {
+        User user = userRepository.findBySession(session);
+        if (user != null) {
+            user.setPassword("");
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
 
 }
