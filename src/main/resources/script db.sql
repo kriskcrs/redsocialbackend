@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `redsocial`.`foto` (
 -- Table `redsocial`.`publicacion`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `redsocial`.`publicacion` (
-                                                         `id_publicacion` INT NOT NULL,
+                                                         `id_publicacion` INT NOT NULL AUTO_INCREMENT,
                                                          `fecha_creacion` DATE NOT NULL,
                                                          `fecha_modificacion` DATE NULL,
                                                          `usuario_id_usuario` VARCHAR(50) NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `redsocial`.`publicacion` (
 -- Table `redsocial`.`comentario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `redsocial`.`comentario` (
-                                                        `id_comentario` INT NOT NULL,
+                                                        `id_comentario` INT NOT NULL AUTO_INCREMENT,
                                                         `texto` VARCHAR(300) NOT NULL,
     `publicacion_id_publicacion` INT NOT NULL,
     PRIMARY KEY (`id_comentario`),
@@ -92,3 +92,20 @@ CREATE TABLE IF NOT EXISTS `redsocial`.`comentario` (
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+INSERT INTO redsocial.usuario
+(id_usuario, nombre, apellido, password, fecha_nacimiento, `session`, fecha_ingreso)
+VALUES('cris@gmail.com', 'cristian', 'caceres', '1', '1991-03-13', NULL, NULL);
+
+INSERT INTO redsocial.foto
+(id_foto, ip_server, ruta, usuario_id_usuario)
+VALUES('photo', '10.10', '/casa', 'cris@gmail.com');
+
+INSERT INTO redsocial.publicacion
+(id_publicacion, fecha_creacion, fecha_modificacion, usuario_id_usuario, foto_id_foto)
+VALUES(1, '2023-10-31', NULL, 'cris@gmail.com', 'photo');
+
+INSERT INTO redsocial.comentario
+(id_comentario, texto, publicacion_id_publicacion)
+VALUES(1, 'hola', 1);

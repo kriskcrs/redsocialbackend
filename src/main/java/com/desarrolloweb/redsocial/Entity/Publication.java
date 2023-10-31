@@ -12,16 +12,15 @@ import java.util.Date;
 @Setter
 public class Publication {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_publicacion")
     private Integer idPublication;
     @Column(name = "fecha_creacion")
     private Date creationDate;
     @Column(name = "fecha_modificacion")
     private Date modificationDate;
-
     @Column(name = "usuario_id_usuario")
     private String userIdUser;
-
     @Column(name = "foto_id_foto")
     private String photoIdPhoto;
 }

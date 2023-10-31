@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 public class Comment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_comentario")
     private Integer idComment;
     @Column(name = "texto")

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("v1")
@@ -24,49 +25,54 @@ public class CommentService {
     //crud de comentarios
 
     //consulta de todos los comentarios
-    @GetMapping (path = "/consult/comment")
-    private ResponseEntity<List<Comment>> consultComment(){
+    @GetMapping(path = "/consult/comment")
+    private ResponseEntity<List<Comment>> consultComment() {
         return ResponseEntity.ok(commentRepository.findAll());
     }
 
     //consulta de comentarios por publicacion
-    @GetMapping (path = "/consult/comment/{idpublication}")
-    private ResponseEntity<List<Comment>> consultCommentUser(@PathVariable int idpublication){
+    @GetMapping(path = "/consult/comment/{idpublication}")
+    private ResponseEntity<List<Comment>> consultCommentUser(@PathVariable int idpublication) {
         return ResponseEntity.ok(commentRepository.findCommentByIdPublication(idpublication));
     }
 
     //crea comentario por publicacion
     @PostMapping(path = "/create/comment")
-    private ResponseEntity<HashMap<String,String>> createComment(@RequestBody Comment comment){
+    private ResponseEntity<HashMap<String, String>> createComment(@RequestBody Comment comment) {
         response.clear();
-        try{
-            int id = commentRepository.findAll().size();
-            id++;
-            comment.setIdComment(id);
+        try {
             commentRepository.save(comment);
-            response.put("message","Comentario agreado");
+            response.put("message", "Comentario agreado");
             return ResponseEntity.ok(response);
-        }catch (Exception e){
-            response.put("message","error al crear comentario");
-            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            System.out.println("error por "+ e.getCause());
+            response.put("message", "error al crear comentario");
+            return ResponseEntity.badRequest().body(response);
         }
     }
 
     //elimina  comentario por publicacion
     @DeleteMapping(path = "/delete/comment/{id}")
-    private ResponseEntity<HashMap<String,String>> deleteComment(@PathVariable int id){
+    private ResponseEntity<HashMap<String, String>> deleteComment(@PathVariable int id) {
         response.clear();
-        try{
-            commentRepository.deleteById(id);
-            response.put("message","Comentario eliminado");
-            return ResponseEntity.ok(response);
-        }catch (Exception e){
-            response.put("message","error al elominar comentario");
-            return ResponseEntity.badRequest().build();
-        }
+        commentRepository.deleteById(id);
+        response.put("message", "Comentario eliminado");
+        return ResponseEntity.ok(response);
     }
 
 
-
-
+    //actualiza comentario por publicacion
+    @PostMapping(path = "/update/comment")
+    private ResponseEntity<HashMap<String, String>> updateComment(@RequestBody Comment comment) {
+        response.clear();
+        try {
+            commentRepository.save(comment);
+            response.put("message", "Comentario actualizado");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            System.out.println("error por "+ e.getCause());
+            response.put("message", "error al actualizar comentario");
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
 }
