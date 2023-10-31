@@ -5,22 +5,20 @@ import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Entity
 @Table(name = "foto")
 @Getter
 @Setter
-public class Foto {
+public class Photo {
     @Id
     @Column(name = "id_foto")
-    private String idFoto;
+    private String idPhoto;
     @Column(name = "ip_server")
     private String ipServer;
     @Column(name = "ruta")
-    private String ruta;
+    private String route;
     @Column(name = "id_usuario")
     private String idUser;
     @Column(name = "id_publicacion")
-    private Integer idPublicacion;
+    private Integer idPublication;
 }

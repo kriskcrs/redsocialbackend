@@ -58,7 +58,7 @@ public class AuthenticationService {
                 if(userData.getSession() ==null || userData.getSession().equals("")){
                     String session = String.valueOf(new Encoding().SessionManager());
                     userData.setSession(session);
-                    userData.setFechaIngreso(new Date());
+                    userData.setDateOfAdmission(new Date());
                     userRepository.save(userData);
                     response.put("session", session);
                     System.out.println(response);
