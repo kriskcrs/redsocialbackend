@@ -14,8 +14,8 @@ public class FileExceptionAdice {
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity<Map<String, String>> handleMaxSizeException(MaxUploadSizeExceededException ex){
         Map<String, String> response = new HashMap<>();
-        response.put("message", "Maximo de tamaño 10 megas");
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        response.put("message", "Maximo de tamaño 100 megas");
+        return ResponseEntity.badRequest().body(response);
     }
 
 }

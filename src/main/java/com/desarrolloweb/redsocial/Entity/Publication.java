@@ -10,16 +10,16 @@ import java.util.Date;
 @Table(name = "publicacion")
 @Getter
 @Setter
-public class Publicacion {
+public class Publication {
     @Id
     @Column(name = "id_publicacion")
-    private Integer idPublicacion;
+    private Integer idPublication;
     @Column(name = "nombre")
-    private String nombre;
+    private String name;
     @Column(name = "reaccion")
-    private String reaccion;
+    private String reaction;
     @Column(name = "fecha_creacion")
-    private Date fechaCreacion;
+    private Date creationDate;
     @Column(name = "fecha_modificacion")
-    private Date fechaModificacion;
+    private Date modificationDate;
 }

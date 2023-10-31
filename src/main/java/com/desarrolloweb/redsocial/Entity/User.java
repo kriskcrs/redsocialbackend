@@ -17,16 +17,16 @@ public class User {
     @Column(name = "id_usuario")
     private String idUser;
     @Column(name = "nombre")
-    private String nombre;
+    private String name;
     @Column(name = "apellido")
-    private String apellido;
+    private String lastName;
     @Column(name = "password")
     private String password;
     @Column(name = "fecha_nacimiento")
-    private Date fechaNacimiento;
+    private Date dob;
     @Column(name = "session")
     private String session;
     @Column(name = "fecha_ingreso")
-    private Date fechaIngreso;
+    private Date dateOfAdmission;
 
 }

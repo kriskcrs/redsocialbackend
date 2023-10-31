@@ -4,20 +4,18 @@ import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Entity
 @Table(name = "comentario")
 @Getter
 @Setter
-public class Comentario {
+public class Comment {
     @Id
     @Column(name = "id_comentario")
-    private Integer idComentario;
+    private Integer idComment;
     @Column(name = "texto")
-    private String texto;
+    private String text;
     @Column(name = "id_usuario")
-    private String idUsuario;
+    private String idUser;
     @Column(name = "id_publicacion")
-    private Integer idPublicacionn;
+    private Integer idPublication;
 }
