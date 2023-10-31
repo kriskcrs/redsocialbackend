@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -15,6 +16,9 @@ public class CommentService {
 
     @Autowired
     CommentRepository commentRepository;
+
+    //vars
+    HashMap<String, String> response = new HashMap<>();
 
 
     //crud de comentarios
@@ -30,6 +34,39 @@ public class CommentService {
     private ResponseEntity<List<Comment>> consultCommentUser(@PathVariable int idpublication){
         return ResponseEntity.ok(commentRepository.findCommentByIdPublication(idpublication));
     }
+
+    //crea comentario por publicacion
+    @PostMapping(path = "/create/comment")
+    private ResponseEntity<HashMap<String,String>> createComment(@RequestBody Comment comment){
+        response.clear();
+        try{
+            int id = commentRepository.findAll().size();
+            id++;
+            comment.setIdComment(id);
+            commentRepository.save(comment);
+            response.put("message","Comentario agreado");
+            return ResponseEntity.ok(response);
+        }catch (Exception e){
+            response.put("message","error al crear comentario");
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    //elimina  comentario por publicacion
+    @DeleteMapping(path = "/delete/comment/{id}")
+    private ResponseEntity<HashMap<String,String>> deleteComment(@PathVariable int id){
+        response.clear();
+        try{
+            commentRepository.deleteById(id);
+            response.put("message","Comentario eliminado");
+            return ResponseEntity.ok(response);
+        }catch (Exception e){
+            response.put("message","error al elominar comentario");
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
 
 
 }
