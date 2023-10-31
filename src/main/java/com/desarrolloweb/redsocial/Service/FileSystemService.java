@@ -66,8 +66,8 @@ public class FileSystemService {
     }
 
 
-    @PostMapping("/fileDown")
-    private ResponseEntity<Resource> DownFile(@RequestParam String file) {
+    @GetMapping("/fileDown/{file}")
+    private ResponseEntity<Resource> DownFile(@PathVariable String file) {
         try {
             Photo photo = photoRepository.findByIdPhoto(file);
 
