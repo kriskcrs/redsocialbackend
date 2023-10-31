@@ -1,6 +1,5 @@
 package com.desarrolloweb.redsocial.Service;
 
-
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +16,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("v1")
+@CrossOrigin
 public class FileSystemService {
 
     //vars
