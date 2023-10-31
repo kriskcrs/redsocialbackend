@@ -17,8 +17,6 @@ public class Photo {
     private String ipServer;
     @Column(name = "ruta")
     private String route;
-    @Column(name = "id_usuario")
+    @Column(name = "usuario_id_usuario")
     private String idUser;
-    @Column(name = "id_publicacion")
-    private Integer idPublication;
 }

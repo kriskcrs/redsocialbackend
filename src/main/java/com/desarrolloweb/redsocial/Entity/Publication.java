@@ -14,12 +14,14 @@ public class Publication {
     @Id
     @Column(name = "id_publicacion")
     private Integer idPublication;
-    @Column(name = "nombre")
-    private String name;
-    @Column(name = "reaccion")
-    private String reaction;
     @Column(name = "fecha_creacion")
     private Date creationDate;
     @Column(name = "fecha_modificacion")
     private Date modificationDate;
+
+    @Column(name = "usuario_id_usuario")
+    private String userIdUser;
+
+    @Column(name = "foto_id_foto")
+    private String photoIdPhoto;
 }

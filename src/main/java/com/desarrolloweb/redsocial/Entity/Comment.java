@@ -14,8 +14,6 @@ public class Comment {
     private Integer idComment;
     @Column(name = "texto")
     private String text;
-    @Column(name = "id_usuario")
-    private String idUser;
-    @Column(name = "id_publicacion")
+    @Column(name = "publicacion_id_publicacion")
     private Integer idPublication;
 }
