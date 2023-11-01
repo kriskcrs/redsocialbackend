@@ -3,6 +3,7 @@ import com.desarrolloweb.redsocial.Entity.User;
 import com.desarrolloweb.redsocial.Repository.*;
 import com.desarrolloweb.redsocial.Tools.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -34,19 +35,16 @@ public class UserService {
     }
 
     @PostMapping(path = "/createUser")
-    private HashMap<String, String> createUser(@RequestBody User user) {
-        try {
-                user.setPassword(new Encoding().MD5(user.getPassword()));
-                user.setDateOfAdmission(new Date());
-                userRepository.save(user);
-                response.put("code", "0");
-                response.put("message", okC);
-                return response;
-        } catch (Exception e) {
-            System.out.println("Error creando el tipo de documento" + e.getMessage() + " causa" + e.getCause());
-            response.put("code", "1");
-            response.put("message", failsC);
-            return response;
+    private ResponseEntity<HashMap<String, String>> createUser(@RequestBody User user) {
+        if(user != null) {
+            user.setPassword(new Encoding().MD5(user.getPassword()));
+            user.setDateOfAdmission(new Date());
+            userRepository.save(user);
+            response.put("message", "Usuario creado");
+            return ResponseEntity.ok(response);
+        }else{
+            response.put("message", "Llenar todos los campos");
+            return ResponseEntity.badRequest().body(response);
         }
     }
 
