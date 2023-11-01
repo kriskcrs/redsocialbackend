@@ -22,6 +22,8 @@ public class User {
     private String lastName;
     @Column(name = "password")
     private String password;
+    @Column(name = "requiere_cambio")
+    private String requiredChange;
     @Column(name = "fecha_nacimiento")
     private Date dob;
     @Column(name = "session")
