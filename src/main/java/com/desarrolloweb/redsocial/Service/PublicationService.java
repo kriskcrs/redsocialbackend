@@ -1,12 +1,19 @@
 package com.desarrolloweb.redsocial.Service;
-
 import com.desarrolloweb.redsocial.Entity.Publication;
 import com.desarrolloweb.redsocial.Tools.Encoding;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import com.desarrolloweb.redsocial.Repository.PublicationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 @RestController
@@ -14,6 +21,12 @@ import java.util.List;
 @CrossOrigin
 public class PublicationService {
 
+    @Autowired
+    PublicationRepository publicationRepository;
 
+    @GetMapping(path = "/publications")
+    private ResponseEntity<List<Publication>> publicationList() {
+        return ResponseEntity.ok(publicationRepository.findAll());
+    }
 
 }
