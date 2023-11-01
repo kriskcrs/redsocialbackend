@@ -23,11 +23,7 @@ public class profile {
     @Autowired
     UserRepository userRepository;
 
-    //traer datos del perfil
-    @GetMapping(path = "/profile")
-    private List<User> profileList() {
-        return userRepository.findAll();
-    }
+
 
 
     //Modificar perfil

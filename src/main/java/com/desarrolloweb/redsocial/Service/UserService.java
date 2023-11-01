@@ -1,9 +1,11 @@
 package com.desarrolloweb.redsocial.Service;
+import com.desarrolloweb.redsocial.Entity.User;
 import com.desarrolloweb.redsocial.Repository.*;
 import com.desarrolloweb.redsocial.Tools.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 
 @RestController
@@ -18,6 +20,10 @@ public class UserService {
         return new Encoding().MD5(text);
     }
 
+    @GetMapping(path = "/profile")
+    private List<User> profileList() {
+        return userRepository.findAll();
+    }
 
 
 }
