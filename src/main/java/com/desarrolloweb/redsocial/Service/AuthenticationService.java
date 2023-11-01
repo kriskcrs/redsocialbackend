@@ -56,6 +56,13 @@ public class AuthenticationService {
 
                 System.out.println(userData.getSession());
                 if(userData.getSession() ==null || userData.getSession().equals("")){
+
+                   /* implementacion de servicio para validar si require cambio
+                    if(userData.requiredChange == 1){
+                        return ResponseEntity.accepted().build();
+                    }else{
+
+                    }*/
                     String session = String.valueOf(new Encoding().SessionManager());
                     userData.setSession(session);
                     userData.setDateOfAdmission(new Date());

@@ -19,7 +19,7 @@ public class PublicationService {
     @Autowired
     PublicationRepository publicationRepository;
 
-    @GetMapping(path = "/publications")
+    @GetMapping(path = "/consult/publications")
     private ResponseEntity<List<Publication>> publicationList() {
         return ResponseEntity.ok(publicationRepository.findAll());
     }
