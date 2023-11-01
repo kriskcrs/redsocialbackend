@@ -57,7 +57,13 @@ public class AuthenticationService {
                 System.out.println(userData.getSession());
                 if(userData.getSession() ==null || userData.getSession().equals("")){
                     if(userData.getRequiredChange().equals("1")){
-                        return ResponseEntity.accepted().build();
+                        String session = String.valueOf(new Encoding().SessionManager());
+                        userData.setSession(session);
+                        userData.setDateOfAdmission(new Date());
+                        userRepository.save(userData);
+                        response.put("session", session);
+                        System.out.println(response);
+                        return ResponseEntity.accepted().body(response);
                     }else{
                         String session = String.valueOf(new Encoding().SessionManager());
                         userData.setSession(session);
