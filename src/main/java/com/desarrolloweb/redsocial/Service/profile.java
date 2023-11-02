@@ -4,6 +4,7 @@ package com.desarrolloweb.redsocial.Service;
 import com.desarrolloweb.redsocial.Entity.*;
 import com.desarrolloweb.redsocial.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -24,7 +25,10 @@ public class profile {
     UserRepository userRepository;
 
 
-
+    @GetMapping(path = "/consult/profile/{iduser}")
+    private ResponseEntity<User> consultProfileUser(@PathVariable String iduser) {
+        return ResponseEntity.ok(userRepository.findByIdUser(iduser));
+    }
 
     //Modificar perfil
     @PutMapping(path = "/updateProfile/{id}")
