@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `redsocial`.`usuario` (
     `nombre` VARCHAR(100) NOT NULL,
     `apellido` VARCHAR(100) NOT NULL,
     `password` VARCHAR(50) NOT NULL,
+    `requiere_cambio` VARCHAR(1) NOT NULL,
     `fecha_nacimiento` DATE NOT NULL,
     `session` VARCHAR(200) NULL,
     `fecha_ingreso` DATETIME NULL,
@@ -95,8 +96,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 INSERT INTO redsocial.usuario
-(id_usuario, nombre, apellido, password, fecha_nacimiento, `session`, fecha_ingreso)
-VALUES('cris@gmail.com', 'cristian', 'caceres', '1', '1991-03-13', NULL, NULL);
+(id_usuario, nombre, apellido, password, requiere_cambio, fecha_nacimiento, `session`, fecha_ingreso)
+VALUES('cris@gmail.com', 'cristian', 'caceres', '1', '1', '1991-03-13', NULL, NULL);
 
 INSERT INTO redsocial.foto
 (id_foto, ip_server, ruta, usuario_id_usuario)

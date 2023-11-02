@@ -1,6 +1,8 @@
-BK -> Transformar imagenes
+DI
+    BK -> Transformar imagenes
     FR -> Mostrar imagenes
-    Recuperar contraseña > Envio de corres RC
+    Recuperar contraseña > Envio de correos RC
+    Set Password
 PR
     Creacio de usuario -> MD5
     Crear post -> Publicar

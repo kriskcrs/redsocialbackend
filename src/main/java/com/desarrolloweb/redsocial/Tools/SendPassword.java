@@ -8,8 +8,8 @@ import javax.mail.Transport;
 public class SendPassword {
 
     private static final String HOST = "smtp.gmail.com";
-    private static final String USERNAME = "proyecto.nomina01@gmail.com"; //cambiar email
-    private static final String USER_PASSWORD = "mczfepnwfckpkwud";  // NO TOCAR, esta es una contraseña segura que se generó desde la configuración del correo, si la cambian; valines...
+    private static final String USERNAME = "pix.photo.wd@gmail.com"; //cambiar email
+    private static final String USER_PASSWORD = "pbxpketstwlkcdsa";  // NO TOCAR, esta es una contraseña segura que se generó desde la configuración del correo, si la cambian; valines...
 
     public static void sendPasswordByEmail(String idUser, String password) throws MessagingException {
         Properties properties = new Properties();

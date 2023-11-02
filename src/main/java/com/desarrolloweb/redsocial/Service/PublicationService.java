@@ -26,7 +26,8 @@ public class PublicationService {
     PublicationRepository publicationRepository;
 
     HashMap<String, String> response = new HashMap<>();
-    @GetMapping(path = "/publications")
+
+    @GetMapping(path = "/consult/publications")
     private ResponseEntity<List<Publication>> publicationList() {
         return ResponseEntity.ok(publicationRepository.findAll());
     }

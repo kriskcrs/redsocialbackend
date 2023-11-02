@@ -56,19 +56,27 @@ public class AuthenticationService {
 
                 System.out.println(userData.getSession());
                 if(userData.getSession() ==null || userData.getSession().equals("")){
-                    String session = String.valueOf(new Encoding().SessionManager());
-                    userData.setSession(session);
-                    userData.setDateOfAdmission(new Date());
-                    userRepository.save(userData);
-                    response.put("session", session);
-                    System.out.println(response);
-                    return ResponseEntity.ok(response);
+                    if(userData.getRequiredChange().equals("1")){
+                        String session = String.valueOf(new Encoding().SessionManager());
+                        userData.setSession(session);
+                        userData.setDateOfAdmission(new Date());
+                        userRepository.save(userData);
+                        response.put("session", session);
+                        System.out.println(response);
+                        return ResponseEntity.accepted().body(response);
+                    }else{
+                        String session = String.valueOf(new Encoding().SessionManager());
+                        userData.setSession(session);
+                        userData.setDateOfAdmission(new Date());
+                        userRepository.save(userData);
+                        response.put("session", session);
+                        System.out.println(response);
+                        return ResponseEntity.ok(response);
+                    }
                 }else{
-
                     response.put("message", "Usuario cuenta con una sesion activa");
                     return ResponseEntity.badRequest().body(response);
                 }
-
             } else {
                 System.out.println("Usuario no existe");
                 return ResponseEntity.noContent().build();
