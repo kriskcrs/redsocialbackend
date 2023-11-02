@@ -6,8 +6,10 @@ import com.desarrolloweb.redsocial.Tools.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+
 
 
 @RestController
@@ -33,6 +35,19 @@ public class UserService {
         return new Encoding().MD5(text);
     }
 
+    @PostMapping(path = "/createUser")
+    private ResponseEntity<HashMap<String, String>> createUser(@RequestBody User user) {
+        if(user != null) {
+            user.setPassword(new Encoding().MD5(user.getPassword()));
+            user.setDateOfAdmission(new Date());
+            userRepository.save(user);
+            response.put("message", "Usuario creado");
+            return ResponseEntity.ok(response);
+        }else{
+            response.put("message", "Llenar todos los campos");
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
     @GetMapping(path = "/users")
     private ResponseEntity<List<User>> userList() {
         return ResponseEntity.ok(userRepository.findAll());
@@ -65,10 +80,11 @@ public class UserService {
     @PostMapping(path = "/setPassword")
     private ResponseEntity<HashMap<String, String>> setPassword(@RequestBody ChangePassword changePassword){
         response.clear();
+        changePassword.setPassword(new Encoding().MD5(changePassword.getPassword()));
         User user = userRepository.findByIdUserAndPassword(changePassword.getIdUser(), changePassword.getPassword());
         if(user != null){
             if(changePassword.getPasswordNew().equals(changePassword.getPasswordConfirm())){
-                user.setPassword(changePassword.getPasswordNew());
+                user.setPassword(new Encoding().MD5(changePassword.getPasswordNew()));
                 user.setRequiredChange("0");
                 userRepository.save(user);
                 response.put("message", "Contraseña cambiada exitosamente");
