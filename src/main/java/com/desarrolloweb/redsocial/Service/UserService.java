@@ -65,10 +65,11 @@ public class UserService {
     @PostMapping(path = "/setPassword")
     private ResponseEntity<HashMap<String, String>> setPassword(@RequestBody ChangePassword changePassword){
         response.clear();
+        changePassword.setPassword(new Encoding().MD5(changePassword.getPassword()));
         User user = userRepository.findByIdUserAndPassword(changePassword.getIdUser(), changePassword.getPassword());
         if(user != null){
             if(changePassword.getPasswordNew().equals(changePassword.getPasswordConfirm())){
-                user.setPassword(changePassword.getPasswordNew());
+                user.setPassword(new Encoding().MD5(changePassword.getPasswordNew()));
                 user.setRequiredChange("0");
                 userRepository.save(user);
                 response.put("message", "Contraseña cambiada exitosamente");
