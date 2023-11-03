@@ -32,23 +32,16 @@ public class profile {
 
     //Modificar perfil
     @PutMapping(path = "/updateProfile/{id}")
-    private HashMap<String, String> updateUser(@RequestBody User user, @PathVariable String id) {
+    private ResponseEntity<HashMap<String, String>> updateUser(@RequestBody User user, @PathVariable String id) {
+        response.clear();
         try {
-
-            User userFind = userRepository.findByIdUser(id);
-            userFind.setName(user.getName());
-            userFind.setLastName(user.getName());
-            userFind.setDob(user.getDob());
-            userRepository.save(userFind);
-            response.put("code", "200");
-            response.put("message", okU);
-            return response;
-
+            userRepository.save(user);
+            response.put("message", "Usuario actualizado");
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            System.out.println(e.getMessage() + " causa" + e.getCause());
-            response.put("code", "500");
-            response.put("message", failsU);
-            return response;
+            System.out.println("error por "+ e.getCause());
+            response.put("message", "error al actualizar usuario");
+            return ResponseEntity.badRequest().body(response);
         }
     }
     }
