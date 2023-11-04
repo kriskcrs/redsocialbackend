@@ -1,12 +1,15 @@
 package com.desarrolloweb.redsocial.Service;
+import com.desarrolloweb.redsocial.Entity.Photo;
 import com.desarrolloweb.redsocial.Entity.Publication;
+import com.desarrolloweb.redsocial.Entity.PublicationPhoto;
 import com.desarrolloweb.redsocial.Entity.User;
+import com.desarrolloweb.redsocial.Repository.PhotoRepository;
 import com.desarrolloweb.redsocial.Tools.Encoding;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+
+import java.util.*;
+
 import com.desarrolloweb.redsocial.Repository.PublicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +28,25 @@ public class PublicationService {
     @Autowired
     PublicationRepository publicationRepository;
 
+    @Autowired
+    PhotoRepository photoRepository;
+
     HashMap<String, String> response = new HashMap<>();
 
     @GetMapping(path = "/consult/publications")
-    private ResponseEntity<List<Publication>> publicationList() {
-        return ResponseEntity.ok(publicationRepository.findAll());
+    private ResponseEntity<List<PublicationPhoto>> publicationList() {
+        List<Publication> publicationList= publicationRepository.findAll();
+        List<Photo> photoList= photoRepository.findAll();
+        List<PublicationPhoto> publicationPhotosList= new ArrayList<>();
+
+        for (int p =0;p<=publicationList.size();p++){
+            for (int f =0;f<=photoList.size();f++){
+                if(photoList.get(f).getIdPhoto().equals(publicationList.get(p).getPhotoIdPhoto())){
+                    System.out.println("je");
+                }
+            }
+        }
+        return ResponseEntity.ok(publicationPhotosList);
     }
 
     //Crea  publicacion
