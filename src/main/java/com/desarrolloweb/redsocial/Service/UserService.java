@@ -30,7 +30,7 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping(path = "/md5/{text}")
+    @GetMapping(value = "/md5/{text}")
     private String Md5(@PathVariable String text) {
         return new Encoding().MD5(text);
     }

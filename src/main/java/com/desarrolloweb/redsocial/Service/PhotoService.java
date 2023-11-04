@@ -16,6 +16,8 @@ public class PhotoService {
     @Autowired
     PhotoRepository photoRepository;
 
+
+
     @GetMapping (path = "/photos")
     private List<Photo> photoList(){
         return photoRepository.findAll();
@@ -23,6 +25,10 @@ public class PhotoService {
 
     @PostMapping(path = "/upPhoto")
     private Photo photoCreate(@RequestBody Photo photo){
+
+
+
+
         return photoRepository.save(photo);
     }
 
