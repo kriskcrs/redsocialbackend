@@ -37,9 +37,13 @@ public class UserService {
 
     @PostMapping(path = "/createUser")
     private ResponseEntity<HashMap<String, String>> createUser(@RequestBody User user) {
-        if(user != null) {
+        User userReadi = userRepository.findByIdUser(user.getIdUser());
+        if(userReadi != null){
+            response.put("message", "Usuario ya existe");
+            return ResponseEntity.badRequest().body(response);
+        }else if(user != null) {
             user.setPassword(new Encoding().MD5(user.getPassword()));
-            user.setDateOfAdmission(new Date());
+            user.setRequiredChange("1");
             userRepository.save(user);
             response.put("message", "Usuario creado");
             return ResponseEntity.ok(response);
