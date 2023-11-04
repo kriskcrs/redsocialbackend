@@ -52,10 +52,11 @@ CREATE TABLE IF NOT EXISTS `redsocial`.`foto` (
 -- Table `redsocial`.`publicacion`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `redsocial`.`publicacion` (
-                                                         `id_publicacion` INT NOT NULL AUTO_INCREMENT,
-                                                         `fecha_creacion` DATE NOT NULL,
-                                                         `fecha_modificacion` DATE NULL,
-                                                         `usuario_id_usuario` VARCHAR(50) NOT NULL,
+    `id_publicacion` INT NOT NULL AUTO_INCREMENT,
+    `descripcion` VARCHAR(100),
+    `fecha_creacion` DATE NOT NULL,
+    `fecha_modificacion` DATE NULL,
+    `usuario_id_usuario` VARCHAR(50) NOT NULL,
     `foto_id_foto` VARCHAR(50) NULL,
     PRIMARY KEY (`id_publicacion`),
     INDEX `fk_publicacion_usuario1_idx` (`usuario_id_usuario` ASC) VISIBLE,
@@ -97,7 +98,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 INSERT INTO redsocial.usuario
 (id_usuario, nombre, apellido, password, requiere_cambio, fecha_nacimiento, `session`, fecha_ingreso)
-VALUES('cris@gmail.com', 'cristian', 'caceres', '1', '1', '1991-03-13', NULL, NULL);
+VALUES('cris@gmail.com', 'cristian', 'caceres', 'c4ca4238a0b923820dcc509a6f75849b', '0', '1991-03-13', NULL, NULL);
 
 INSERT INTO redsocial.foto
 (id_foto, ip_server, ruta, usuario_id_usuario)
@@ -105,7 +106,7 @@ VALUES('photo', '10.10', '/casa', 'cris@gmail.com');
 
 INSERT INTO redsocial.publicacion
 (id_publicacion, fecha_creacion, fecha_modificacion, usuario_id_usuario, foto_id_foto)
-VALUES(1, '2023-10-31', NULL, 'cris@gmail.com', 'photo');
+VALUES(2, '2023-10-31', NULL, 'cris@gmail.com', 'photo');
 
 INSERT INTO redsocial.comentario
 (id_comentario, texto, publicacion_id_publicacion)
