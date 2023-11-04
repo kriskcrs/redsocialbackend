@@ -38,14 +38,22 @@ public class PublicationService {
         List<Publication> publicationList= publicationRepository.findAll();
         List<Photo> photoList= photoRepository.findAll();
         List<PublicationPhoto> publicationPhotosList= new ArrayList<>();
+        PublicationPhoto publicationPhoto = new PublicationPhoto();
 
-        for (int p =0;p<=publicationList.size();p++){
-            for (int f =0;f<=photoList.size();f++){
-                if(photoList.get(f).getIdPhoto().equals(publicationList.get(p).getPhotoIdPhoto())){
-                    System.out.println("je");
+        for (Publication publication:publicationList
+             ) {
+
+            for (Photo photo:photoList
+                 ) {
+                if(photo.getIdPhoto().equals(publication.getPhotoIdPhoto())){
+                    publicationPhoto.setPublication(publication);
+                    publicationPhoto.setPhoto(photo);
+                    publicationPhotosList.add(publicationPhoto);
                 }
+
             }
         }
+
         return ResponseEntity.ok(publicationPhotosList);
     }
 
