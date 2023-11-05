@@ -9,12 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @RequestMapping("v1")
 @CrossOrigin
-public class profile {
+public class ProfileService {
 
     //vars
     String okU = "Se actualiza correctamente";
@@ -44,6 +43,6 @@ public class profile {
             return ResponseEntity.badRequest().body(response);
         }
     }
-    }
+}
 
 
