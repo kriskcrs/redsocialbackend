@@ -42,9 +42,11 @@ public class PublicationService {
 
         for (Publication publication:publicationList
              ) {
-
+            System.out.println(publication.getIdPublication()+" id publicacion ");
+            System.out.println(publication.getPhotoIdPhoto()+" id photo pero de publicacion");
             for (Photo photo:photoList
                  ) {
+                System.out.println(photo.getIdPhoto()+" id de photo solo photo");
                 if(photo.getIdPhoto().equals(publication.getPhotoIdPhoto())){
                     publicationPhoto.setPublication(publication);
                     publicationPhoto.setPhoto(photo);
