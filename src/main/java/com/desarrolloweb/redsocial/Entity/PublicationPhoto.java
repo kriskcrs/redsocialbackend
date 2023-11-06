@@ -8,4 +8,7 @@ import lombok.Setter;
 public class PublicationPhoto{
     private Publication publication;
     private Photo photo;
+
+    public void add(PublicationPhoto publicationPhoto) {
+    }
 }
