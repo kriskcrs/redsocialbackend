@@ -54,6 +54,10 @@ public class PublicationService {
         return ResponseEntity.ok(publicationPhotosList);
     }
 
+    @GetMapping (path = "/consult/publication/{id}")
+    private Publication publication(@PathVariable Integer id){
+        return publicationRepository.findByIdPublication(id);
+    }
 
     //Crea  publicacion
     @PostMapping(path = "/createPublication")
