@@ -87,9 +87,7 @@ public class FileSystemService {
                     photo.setIdUser(user);
                     photoRepository.save(photo);
 
-                    response.put("ruta_original", String.valueOf(targetLocationOriginal));
-                    response.put("ruta_medium", String.valueOf(targetLocationMedium));
-                    response.put("ruta_thumbnail", String.valueOf(targetLocationThumbnail));
+                    response.put("idImagen", String.valueOf(nameFile));
                     return ResponseEntity.ok(response);
                 }else{
                     response.put("message", userNotFound);
