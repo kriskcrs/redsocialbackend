@@ -2,16 +2,12 @@ package com.desarrolloweb.redsocial.Service;
 
 import com.desarrolloweb.redsocial.Entity.Photo;
 import com.desarrolloweb.redsocial.Repository.PhotoRepository;
+import com.desarrolloweb.redsocial.Tools.Encoding;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,7 +27,6 @@ public class FileSystemService {
     @Autowired
     PhotoRepository photoRepository;
 
-
     @PostMapping("/fileUp")
     public ResponseEntity<HashMap<String, String>> UpFile(@RequestParam("file") MultipartFile file,
                                                           @RequestParam("path") String path,
@@ -44,7 +39,8 @@ public class FileSystemService {
                 return ResponseEntity.badRequest().body(response);
             } else {
                 // Generar un nombre de archivo único
-                String nameFile = StringUtils.cleanPath(file.getOriginalFilename());
+               // String nameFile = StringUtils.cleanPath(file.getOriginalFilename());
+                String nameFile = String.valueOf(new Encoding().SessionManager());
                 Path targetLocation = Paths.get(path).resolve(nameFile);
 
                 Photo photo = new Photo();
@@ -55,7 +51,7 @@ public class FileSystemService {
                 photoRepository.save(photo);
                 // Guardar el archivo en el directorio de almacenamiento
                 Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-                response.put("message", "ruta: " + targetLocation);
+                response.put("ruta", String.valueOf(targetLocation));
                 return ResponseEntity.ok(response);
             }
         } catch (Exception e) {
@@ -66,36 +62,6 @@ public class FileSystemService {
     }
 
 
-    @GetMapping("/fileDown/{file}")
-    private ResponseEntity<Resource> DownFile(@PathVariable String file) {
-        try {
-            Photo photo = photoRepository.findByIdPhoto(file);
-
-            if(photo != null){
-                Path routeFile = Paths.get(photo.getRoute()).resolve(file);
-
-                System.out.println( " usuario que grabo foto -> "+photo.getIdUser() +"\n ruta de la foto -> "+ photo.getIpServer() + routeFile);
-                // Cargar el archivo como recurso
-                Resource recurso = new UrlResource(routeFile.toUri());
-                // Verificar si el archivo existe y es legible
-                if (recurso.exists() && recurso.isReadable()) {
-                    // Devolver el archivo como respuesta HTTP
-                    return ResponseEntity.ok()
-                            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"")
-                            .body(recurso);
-                } else {
-                    return ResponseEntity.noContent().build();
-                }
-            }else{
-                return ResponseEntity.noContent().build();
-            }
-        } catch (IOException e) {
-            System.out.println("error " +e.getCause());
-            return ResponseEntity.badRequest().build();
-        }
-
-
-    }
 
 
 }

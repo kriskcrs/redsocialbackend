@@ -15,6 +15,8 @@ public class Publication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_publicacion")
     private Integer idPublication;
+    @Column(name = "descripcion")
+    private String decription;
     @Column(name = "fecha_creacion")
     private Date creationDate;
     @Column(name = "fecha_modificacion")

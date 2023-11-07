@@ -45,7 +45,7 @@ public class CommentService {
             response.put("message", "Comentario agreado");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            System.out.println("error por "+ e.getCause());
+            System.out.println("error por " + e.getCause());
             response.put("message", "error al crear comentario");
             return ResponseEntity.badRequest().body(response);
         }
@@ -70,7 +70,7 @@ public class CommentService {
             response.put("message", "Comentario actualizado");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            System.out.println("error por "+ e.getCause());
+            System.out.println("error por " + e.getCause());
             response.put("message", "error al actualizar comentario");
             return ResponseEntity.badRequest().body(response);
         }

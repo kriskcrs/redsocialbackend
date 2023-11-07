@@ -15,7 +15,7 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("v1")
 @CrossOrigin
-public class profile {
+public class ProfileService {
 
     //vars
     String okU = "Se actualiza correctamente";
@@ -51,6 +51,6 @@ public class profile {
             return ResponseEntity.badRequest().body(response);
         }
     }
-    }
+}
 
 

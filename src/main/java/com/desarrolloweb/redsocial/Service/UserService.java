@@ -30,16 +30,20 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping(path = "/md5/{text}")
+    @GetMapping(value = "/md5/{text}")
     private String Md5(@PathVariable String text) {
         return new Encoding().MD5(text);
     }
 
     @PostMapping(path = "/createUser")
     private ResponseEntity<HashMap<String, String>> createUser(@RequestBody User user) {
-        if(user != null) {
+        User userReadi = userRepository.findByIdUser(user.getIdUser());
+        if(userReadi != null){
+            response.put("message", "Usuario ya existe");
+            return ResponseEntity.badRequest().body(response);
+        }else if(user != null) {
             user.setPassword(new Encoding().MD5(user.getPassword()));
-            user.setDateOfAdmission(new Date());
+            user.setRequiredChange("1");
             userRepository.save(user);
             response.put("message", "Usuario creado");
             return ResponseEntity.ok(response);
