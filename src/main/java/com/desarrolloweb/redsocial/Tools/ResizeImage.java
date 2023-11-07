@@ -8,30 +8,25 @@ import java.io.IOException;
 
 public class ResizeImage {
 
-    public boolean resize(){
+    public BufferedImage resize(File fileOriginal, int ancho, int alto){
         try{
             //carga la imagen
-            File fileOriginal = new File("ppp.jpg");
             System.out.println(fileOriginal);
             BufferedImage imgOriginal = ImageIO.read(fileOriginal);
-
-            //tamaño
-            int ancho = 500;
-            int alto = 500;
 
             BufferedImage imagenResize = new BufferedImage(ancho, alto, imgOriginal.getType());
             Graphics2D g = imagenResize.createGraphics();
             g.drawImage(imgOriginal, 0, 0, ancho, alto, null);
             g.dispose();
 
+            return imagenResize;
             //guardar la imagen
-            File fileResize = new File("img100x100.jpg");
-            ImageIO.write(imagenResize, "jpg", fileResize);
-            System.out.println("finalizo");
+            //File fileResize = new File("img100x100.jpg");
+            //ImageIO.write(imagenResize, "jpg", fileResize);
+
         }catch (IOException e){
             e.printStackTrace();
+            return null;
         }
-
-        return  false;
     }
 }
