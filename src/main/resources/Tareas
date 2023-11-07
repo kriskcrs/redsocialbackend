@@ -1,16 +1,16 @@
 DI
-    BK -> Transformar imagenes
-    FR -> Mostrar imagenes
-    Recuperar contraseña > Envio de correos RC
-    Set Password
+    OK -> BK -> Transformar imagenes
+    OK -> FR -> Mostrar imagenes
+    OK -> Recuperar contraseña > Envio de correos RC
+    OK -> Set Password
 PR
-    Creacio de usuario -> MD5
-    Crear post -> Publicar
-    Modificar y eliminar publicaciones
+    CASI -> Creacio de usuario -> MD5
+    CASI -> Crear post -> Publicar
+    NO -> Modificar y eliminar publicaciones
 RC
-    Pagina de inicio -> presentar las "publicaciones"
-    Mi perfil
+    CASI -> Pagina de inicio -> presentar las "publicaciones"
+    CASI -> Mi perfil
 CC
-    Login -> ya esta !
-    FTP
-    Comentarios
+    OK -> Login -> ya esta !
+    CASI -> FTP
+    OK ->Comentarios
