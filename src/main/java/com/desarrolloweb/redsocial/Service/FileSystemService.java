@@ -52,7 +52,7 @@ public class FileSystemService {
                 photo.setRoute(path);
                 photo.setIpServer(server);
                 photo.setIdUser(user);
-                photoRepository.save(photo);
+                //photoRepository.save(photo);
                 // Guardar el archivo en el directorio de almacenamiento
                 Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
                 response.put("message", "ruta: " + targetLocation);
