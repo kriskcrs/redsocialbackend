@@ -13,7 +13,7 @@ public class ResizeImageService {
 
     @PostMapping(path = "/resize")
     private String resize(){
-        new ResizeImage().resize();
+        //new ResizeImage().resize();
         return "Yep";
     }
 }
