@@ -2,6 +2,7 @@ package com.desarrolloweb.redsocial.Service;
 
 import com.desarrolloweb.redsocial.Entity.Photo;
 import com.desarrolloweb.redsocial.Repository.PhotoRepository;
+import com.desarrolloweb.redsocial.Tools.Encoding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -38,7 +39,8 @@ public class FileSystemService {
                 return ResponseEntity.badRequest().body(response);
             } else {
                 // Generar un nombre de archivo único
-                String nameFile = StringUtils.cleanPath(file.getOriginalFilename());
+               // String nameFile = StringUtils.cleanPath(file.getOriginalFilename());
+                String nameFile = String.valueOf(new Encoding().SessionManager());
                 Path targetLocation = Paths.get(path).resolve(nameFile);
 
                 Photo photo = new Photo();
@@ -59,27 +61,6 @@ public class FileSystemService {
         }
     }
 
-
-   @GetMapping("/fileDown/{file}")
-    private ResponseEntity<HashMap<String, String>> DownFile(@PathVariable String file) {
-        try {
-            response.clear();
-            Photo photo = photoRepository.findByIdPhoto(file);
-            if(photo != null){
-                Path routeFile = Paths.get(photo.getRoute()).resolve(file);
-                System.out.println( " usuario que grabo foto -> "+photo.getIdUser() +"\n ruta de la foto -> "+ photo.getIpServer() + routeFile);
-                response.put("ruta", "assets/"+file);
-                return ResponseEntity.ok(response);
-            }else{
-                return ResponseEntity.noContent().build();
-            }
-        } catch (Exception e) {
-            System.out.println("error " +e.getCause());
-            return ResponseEntity.badRequest().build();
-        }
-
-
-    }
 
 
 
