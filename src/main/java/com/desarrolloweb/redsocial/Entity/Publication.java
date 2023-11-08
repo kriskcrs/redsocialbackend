@@ -25,6 +25,6 @@ public class Publication {
     private String decription;
     @Column(name = "foto_id_foto")
     private String photoIdPhoto;
-    @Column(name = "like")
-    private Integer like;
+    @Column(name = "emoji")
+    private Integer emoji;
 }
