@@ -50,30 +50,35 @@ public class AuthenticationService {
     private ResponseEntity<HashMap<String, String>> login(@RequestBody User user) {
         response.clear();
         if (user.getIdUser() != null && user.getPassword() != null) {
-
-            User userData = userRepository.findByIdUserAndPassword(user.getIdUser(), new Encoding().MD5(user.getPassword()) );
+            String session = String.valueOf(new Encoding().SessionManager());
+            User userData = userRepository.findByIdUserAndPassword(user.getIdUser(), new Encoding().MD5(user.getPassword()));
             if (userData != null) {
 
                 System.out.println(userData.getSession());
-                if(userData.getSession() ==null || userData.getSession().equals("")){
-                    if(userData.getRequiredChange().equals("1")){
-                        String session = String.valueOf(new Encoding().SessionManager());
-                        userData.setSession(session);
-                        userData.setDateOfAdmission(new Date());
-                        userRepository.save(userData);
-                        response.put("session", session);
-                        System.out.println(response);
-                        return ResponseEntity.accepted().body(response);
-                    }else{
-                        String session = String.valueOf(new Encoding().SessionManager());
-                        userData.setSession(session);
-                        userData.setDateOfAdmission(new Date());
-                        userRepository.save(userData);
-                        response.put("session", session);
-                        System.out.println(response);
-                        return ResponseEntity.ok(response);
+                if (userData.getSession() == null || userData.getSession().equals("")) {
+                    if (userData.getRequiredChange() == null) {
+                        response.put("message", "Usuario mal grabado");
+                        return ResponseEntity.badRequest().body(response);
+
+                    } else {
+                        if (userData.getRequiredChange().equals("1")) {
+                            userData.setSession(session);
+                            userData.setDateOfAdmission(new Date());
+                            userRepository.save(userData);
+                            response.put("session", session);
+                            System.out.println(response);
+                            return ResponseEntity.accepted().body(response);
+                        } else {
+                            session = String.valueOf(new Encoding().SessionManager());
+                            userData.setSession(session);
+                            userData.setDateOfAdmission(new Date());
+                            userRepository.save(userData);
+                            response.put("session", session);
+                            System.out.println(response);
+                            return ResponseEntity.ok(response);
+                        }
                     }
-                }else{
+                } else {
                     response.put("message", "Usuario cuenta con una sesion activa");
                     return ResponseEntity.badRequest().body(response);
                 }
@@ -85,6 +90,7 @@ public class AuthenticationService {
             response.put("Error", "Parametros incorrectos");
             return ResponseEntity.badRequest().body(response);
         }
+
     }
 
 
