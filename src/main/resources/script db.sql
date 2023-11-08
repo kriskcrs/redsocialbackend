@@ -1,46 +1,103 @@
--- MySQL Workbench Synchronization
--- Generated: 2023-11-07 22:35
--- Model: New Model
--- Version: 1.0
--- Project: Name of the project
--- Author: josue
+-- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
-ALTER TABLE `redsocial`.`foto`
-DROP FOREIGN KEY `foto_ibfk_1`;
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema redsocial
+-- -----------------------------------------------------
 
-ALTER TABLE `redsocial`.`foto`
-DROP COLUMN `publicacion_id_publicacion`,
-DROP INDEX `publicacion_id_publicacion` ;
-;
+-- -----------------------------------------------------
+-- Schema redsocial
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `redsocial` DEFAULT CHARACTER SET utf8 ;
+USE `redsocial` ;
 
-ALTER TABLE `redsocial`.`publicacion`
-    ADD COLUMN `foto_id_foto` VARCHAR(50) NOT NULL AFTER `descripcion`,
-ADD COLUMN `like` INT(11) NULL DEFAULT NULL AFTER `foto_id_foto`,
-ADD INDEX `fk_publicacion_foto1_idx` (`foto_id_foto` ASC) VISIBLE;
-;
+-- -----------------------------------------------------
+-- Table `redsocial`.`foto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `redsocial`.`foto` (
+    `id_foto` VARCHAR(50) NOT NULL,
+    `ip_server` VARCHAR(13) NOT NULL,
+    `ruta` VARCHAR(300) NOT NULL,
+    PRIMARY KEY (`id_foto`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb3;
 
-ALTER TABLE `redsocial`.`usuario`
-    ADD COLUMN `foto_id_foto` VARCHAR(50) NOT NULL AFTER `requiere_cambio`,
-ADD INDEX `fk_usuario_foto1_idx` (`foto_id_foto` ASC) VISIBLE;
-;
 
-ALTER TABLE `redsocial`.`publicacion`
-    ADD CONSTRAINT `fk_publicacion_foto1`
-        FOREIGN KEY (`foto_id_foto`)
-            REFERENCES `redsocial`.`foto` (`id_foto`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION;
+-- -----------------------------------------------------
+-- Table `redsocial`.`usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `redsocial`.`usuario` (
+    `id_usuario` VARCHAR(50) NOT NULL,
+    `nombre` VARCHAR(100) NOT NULL,
+    `apellido` VARCHAR(100) NOT NULL,
+    `password` VARCHAR(50) NOT NULL,
+    `fecha_nacimiento` DATE NOT NULL,
+    `session` VARCHAR(200) NULL DEFAULT NULL,
+    `fecha_ingreso` DATETIME NULL DEFAULT NULL,
+    `requiere_cambio` VARCHAR(1) NULL DEFAULT NULL,
+    `foto_id_foto` VARCHAR(50) NOT NULL,
+    PRIMARY KEY (`id_usuario`),
+    INDEX `fk_usuario_foto1_idx` (`foto_id_foto` ASC) VISIBLE,
+    CONSTRAINT `fk_usuario_foto1`
+    FOREIGN KEY (`foto_id_foto`)
+    REFERENCES `redsocial`.`foto` (`id_foto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb3;
 
-ALTER TABLE `redsocial`.`usuario`
-    ADD CONSTRAINT `fk_usuario_foto1`
-        FOREIGN KEY (`foto_id_foto`)
-            REFERENCES `redsocial`.`foto` (`id_foto`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION;
+
+-- -----------------------------------------------------
+-- Table `redsocial`.`publicacion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `redsocial`.`publicacion` (
+                                                         `id_publicacion` INT NOT NULL AUTO_INCREMENT,
+                                                         `fecha_creacion` DATE NOT NULL,
+                                                         `fecha_modificacion` DATE NULL DEFAULT NULL,
+                                                         `usuario_id_usuario` VARCHAR(50) NOT NULL,
+    `descripcion` VARCHAR(100) NULL DEFAULT NULL,
+    `foto_id_foto` VARCHAR(50) NOT NULL,
+    `like` INT NULL,
+    PRIMARY KEY (`id_publicacion`),
+    INDEX `usuario_id_usuario` (`usuario_id_usuario` ASC) VISIBLE,
+    INDEX `fk_publicacion_foto1_idx` (`foto_id_foto` ASC) VISIBLE,
+    CONSTRAINT `publicacion_ibfk_1`
+    FOREIGN KEY (`usuario_id_usuario`)
+    REFERENCES `redsocial`.`usuario` (`id_usuario`),
+    CONSTRAINT `fk_publicacion_foto1`
+    FOREIGN KEY (`foto_id_foto`)
+    REFERENCES `redsocial`.`foto` (`id_foto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `redsocial`.`comentario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `redsocial`.`comentario` (
+                                                        `id_comentario` INT NOT NULL AUTO_INCREMENT,
+                                                        `texto` VARCHAR(300) NOT NULL,
+    `publicacion_id_publicacion` INT NOT NULL,
+    `usuario_id_usuario` VARCHAR(50) NOT NULL,
+    PRIMARY KEY (`id_comentario`),
+    INDEX `publicacion_id_publicacion` (`publicacion_id_publicacion` ASC) VISIBLE,
+    INDEX `usuario_id_usuario` (`usuario_id_usuario` ASC) VISIBLE,
+    CONSTRAINT `comentario_ibfk_1`
+    FOREIGN KEY (`publicacion_id_publicacion`)
+    REFERENCES `redsocial`.`publicacion` (`id_publicacion`),
+    CONSTRAINT `comentario_ibfk_2`
+    FOREIGN KEY (`usuario_id_usuario`)
+    REFERENCES `redsocial`.`usuario` (`id_usuario`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb3;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
