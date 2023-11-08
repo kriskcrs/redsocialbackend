@@ -3,6 +3,7 @@ package com.desarrolloweb.redsocial.Service;
 
 import com.desarrolloweb.redsocial.Entity.*;
 import com.desarrolloweb.redsocial.Repository.UserRepository;
+import com.desarrolloweb.redsocial.Tools.Encoding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,13 @@ public class ProfileService {
     private ResponseEntity<HashMap<String, String>> updateUser(@RequestBody User user, @PathVariable String id) {
         response.clear();
         try {
-            userRepository.save(user);
+
+            User userfind = userRepository.findByIdUser(id);
+            userfind.setName(user.getName());
+            userfind.setLastName(user.getLastName());
+            userfind.setDob(user.getDob());
+            userfind.setPassword(new Encoding().MD5(user.getPassword()));
+            userRepository.save(userfind);
             response.put("message", "Usuario actualizado");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
