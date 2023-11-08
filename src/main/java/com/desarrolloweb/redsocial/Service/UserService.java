@@ -94,7 +94,7 @@ public class UserService {
                 response.put("message", "Contraseña cambiada exitosamente");
                 return ResponseEntity.ok(response);
             }else{
-                response.put("Error", "Contraseñas no coinciden");
+                response.put("message", "Contraseñas no coinciden");
                 return ResponseEntity.badRequest().body(response);
             }
         }else{
