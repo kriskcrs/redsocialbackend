@@ -43,7 +43,7 @@ public class UserService {
             return ResponseEntity.badRequest().body(response);
         }else if(user != null) {
             user.setPassword(new Encoding().MD5(user.getPassword()));
-            user.setRequiredChange("1");
+            user.setRequiredChange("0");
             userRepository.save(user);
             response.put("message", "Usuario creado");
             return ResponseEntity.ok(response);
@@ -67,7 +67,7 @@ public class UserService {
                 String generatedPassword = new PasswordGenerator().generatePassword(lengtPasswordTemp, uppercaseCount, lowercaseCount, digitCount);
                 SendPassword.sendPasswordByEmail(userRecover.getIdUser(), generatedPassword);
                 userRecover.setPassword(new Encoding().MD5(generatedPassword));
-                userRecover.setRequiredChange("1");
+                userRecover.setRequiredChange("0");
                 userRepository.save(userRecover);
                 response.put("message", "Contraseña enviada exitosamente");
                 return ResponseEntity.ok(response);
@@ -94,7 +94,7 @@ public class UserService {
                 response.put("message", "Contraseña cambiada exitosamente");
                 return ResponseEntity.ok(response);
             }else{
-                response.put("Error", "Contraseñas no coinciden");
+                response.put("message", "Contraseñas no coinciden");
                 return ResponseEntity.badRequest().body(response);
             }
         }else{

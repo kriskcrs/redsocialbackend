@@ -1,9 +1,7 @@
 package com.desarrolloweb.redsocial.Service;
 
-import com.desarrolloweb.redsocial.Entity.Photo;
-import com.desarrolloweb.redsocial.Entity.Publication;
-import com.desarrolloweb.redsocial.Entity.PublicationPhoto;
-import com.desarrolloweb.redsocial.Entity.User;
+import com.desarrolloweb.redsocial.Entity.*;
+import com.desarrolloweb.redsocial.Repository.CommentRepository;
 import com.desarrolloweb.redsocial.Repository.PhotoRepository;
 import com.desarrolloweb.redsocial.Tools.Encoding;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +29,9 @@ public class PublicationService {
 
     @Autowired
     PhotoRepository photoRepository;
+
+    @Autowired
+    CommentRepository commentRepository;
 
     HashMap<String, String> response = new HashMap<>();
 
@@ -90,9 +91,6 @@ public class PublicationService {
     @PostMapping(path = "/createPublication")
     private ResponseEntity<HashMap<String, String>> createPublication(@RequestBody Publication publication) {
         if (publication != null) {
-            int idPublication = publicationRepository.findAll().size();
-            idPublication++;
-            publication.setIdPublication(idPublication);
             publication.setCreationDate(new Date());
             publicationRepository.save(publication);
             response.put("message", "Publicacion Creada");
@@ -122,6 +120,11 @@ public class PublicationService {
     @DeleteMapping(path = "/delete/publication/{id}")
     private ResponseEntity<HashMap<String, String>> deletePublication(@PathVariable int id) {
         response.clear();
+        List<Comment> comments =  commentRepository.findCommentByIdPublication(id);
+        for (Comment c:comments
+             ) {
+            commentRepository.delete(c);
+        }
         publicationRepository.deleteById(id);
         response.put("message", "Publicacion eliminada");
         return ResponseEntity.ok(response);

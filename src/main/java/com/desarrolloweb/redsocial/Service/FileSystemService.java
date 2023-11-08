@@ -39,7 +39,6 @@ public class FileSystemService {
     @PostMapping("/fileUp")
     public ResponseEntity<HashMap<String, String>> UpFile(@RequestParam("file") MultipartFile file,
                                                           @RequestParam("path") String path,
-                                                          @RequestParam("user") String user,
                                                           @RequestParam("server") String server) {
         response.clear();
         try {
@@ -47,8 +46,7 @@ public class FileSystemService {
                 response.put("message", messageFailEmpty);
                 return ResponseEntity.badRequest().body(response);
             } else {
-                User userFind = userRepository.findByIdUser(user);
-                if(userFind != null){
+
                     // Generar un nombre de archivo único
                     String nameFile = String.valueOf(new Encoding().SessionManager());
                     String pathOrigin = path + "/original";
@@ -84,17 +82,12 @@ public class FileSystemService {
                     photo.setIdPhoto(nameFile);
                     photo.setRoute(path);
                     photo.setIpServer(server);
-                    photo.setIdUser(user);
+
                     photoRepository.save(photo);
 
-                    response.put("ruta_original", String.valueOf(targetLocationOriginal));
-                    response.put("ruta_medium", String.valueOf(targetLocationMedium));
-                    response.put("ruta_thumbnail", String.valueOf(targetLocationThumbnail));
+                    response.put("idImagen", String.valueOf(nameFile));
                     return ResponseEntity.ok(response);
-                }else{
-                    response.put("message", userNotFound);
-                    return ResponseEntity.badRequest().body(response);
-                }
+
             }
         } catch (Exception e) {
             System.out.println("error " + e.getMessage() + "\nerror causa " + e.getCause());

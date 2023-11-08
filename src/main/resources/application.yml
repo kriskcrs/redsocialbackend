@@ -6,7 +6,7 @@ spring:
         password: 1597
         #url: jdbc:mysql://redsocialdb.cfzlwlklolf9.us-east-1.rds.amazonaws.com:3306/redsocial?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
         #username: admin
-        #password: adminredsocial2023
+        #password: mypHym-durse3-wydgaj
     jpa:
         show-sql: false
 server:
