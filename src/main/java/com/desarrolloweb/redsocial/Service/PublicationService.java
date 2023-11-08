@@ -91,6 +91,7 @@ public class PublicationService {
     @PostMapping(path = "/createPublication")
     private ResponseEntity<HashMap<String, String>> createPublication(@RequestBody Publication publication) {
         if (publication != null) {
+            publication.setEmoji(0);
             publication.setCreationDate(new Date());
             publicationRepository.save(publication);
             response.put("message", "Publicacion Creada");
@@ -102,17 +103,22 @@ public class PublicationService {
     }
 
     //Modifica Publicacion
-    @PutMapping(path = "/modifyPublication")
-    private ResponseEntity<HashMap<String, String>> modifyPublication(@RequestBody Publication publication) {
-        if (publication != null) {
-            publication.setModificationDate(new Date());
-            publicationRepository.save(publication);
-            response.put("message", "Publicacion Modificada");
-            return ResponseEntity.ok(response);
-        } else {
-            response.put("message", "Llenar todos los campos");
-            return ResponseEntity.badRequest().body(response);
+    @PutMapping(path = "/modifyPublication/{id}")
+    private ResponseEntity<HashMap<String, String>> modifyPublication(@PathVariable int id, @RequestBody Publication publication) {
+        Optional<Publication> dataPublication = Optional.ofNullable(publicationRepository.findByIdPublication(id));
+        if (dataPublication.isPresent()) {
+            if (publication != null) {
+                publication.setModificationDate(new Date());
+                publicationRepository.save(publication);
+                response.put("message", "Publicacion Modificada");
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("message", "Llenar todos los campos");
+                return ResponseEntity.badRequest().body(response);
+            }
         }
+        response.put("message", "No se pudo modificar");
+        return ResponseEntity.badRequest().body(response);
     }
 
 
