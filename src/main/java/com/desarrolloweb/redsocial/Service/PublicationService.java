@@ -91,7 +91,6 @@ public class PublicationService {
     @PostMapping(path = "/createPublication")
     private ResponseEntity<HashMap<String, String>> createPublication(@RequestBody Publication publication) {
         if (publication != null) {
-
             publication.setCreationDate(new Date());
             publicationRepository.save(publication);
             response.put("message", "Publicacion Creada");
