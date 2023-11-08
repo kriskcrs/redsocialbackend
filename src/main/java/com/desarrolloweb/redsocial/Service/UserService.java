@@ -67,7 +67,7 @@ public class UserService {
                 String generatedPassword = new PasswordGenerator().generatePassword(lengtPasswordTemp, uppercaseCount, lowercaseCount, digitCount);
                 SendPassword.sendPasswordByEmail(userRecover.getIdUser(), generatedPassword);
                 userRecover.setPassword(new Encoding().MD5(generatedPassword));
-                userRecover.setRequiredChange("1");
+                userRecover.setRequiredChange("0");
                 userRepository.save(userRecover);
                 response.put("message", "Contraseña enviada exitosamente");
                 return ResponseEntity.ok(response);
