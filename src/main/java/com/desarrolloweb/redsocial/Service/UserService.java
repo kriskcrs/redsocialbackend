@@ -43,7 +43,7 @@ public class UserService {
             return ResponseEntity.badRequest().body(response);
         }else if(user != null) {
             user.setPassword(new Encoding().MD5(user.getPassword()));
-            user.setRequiredChange("1");
+            user.setRequiredChange("0");
             userRepository.save(user);
             response.put("message", "Usuario creado");
             return ResponseEntity.ok(response);
