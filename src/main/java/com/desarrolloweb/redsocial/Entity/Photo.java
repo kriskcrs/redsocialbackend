@@ -18,6 +18,4 @@ public class Photo {
 
     @Column(name = "ruta")
     private String route;
-    @Column(name = "usuario_id_usuario")
-    private String idUser;
 }
