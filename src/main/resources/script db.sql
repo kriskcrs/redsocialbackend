@@ -103,3 +103,5 @@ CREATE TABLE IF NOT EXISTS `redsocial`.`comentario` (
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+INSERT INTO redsocial.foto (id_foto, ip_server, ruta) VALUES('perfil.png', '10.10', '\\perfil.png');
