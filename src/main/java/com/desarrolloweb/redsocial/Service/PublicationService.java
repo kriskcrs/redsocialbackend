@@ -87,6 +87,30 @@ public class PublicationService {
 
     }
 
+
+    //consulta solo publicaciones de un usuario
+    @GetMapping(path = "/consult/publicationUser/{id}")
+    private ResponseEntity<List<Publication>> publicationUser(@PathVariable String id) {
+        List<Publication> publicationList = publicationRepository.findAll();
+        List<Publication> publicationUserList = new ArrayList<>();
+        try {
+            for (Publication publication: publicationList)
+            {
+                if (publication.getUserIdUser().equals(id)) {
+                    publicationUserList.add(publication);
+                }
+            }
+            return ResponseEntity.ok(publicationUserList);
+        } catch (Exception e) {
+            System.out.println("error -> " + e.getCause());
+            response.put("message","valores invalidos");
+            return ResponseEntity.badRequest().build();
+        }
+
+    }
+
+
+
     //Crea  publicacion
     @PostMapping(path = "/createPublication")
     private ResponseEntity<HashMap<String, String>> createPublication(@RequestBody Publication publication) {

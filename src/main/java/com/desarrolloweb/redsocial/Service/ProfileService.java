@@ -2,6 +2,7 @@ package com.desarrolloweb.redsocial.Service;
 
 
 import com.desarrolloweb.redsocial.Entity.*;
+import com.desarrolloweb.redsocial.Repository.PhotoRepository;
 import com.desarrolloweb.redsocial.Repository.UserRepository;
 import com.desarrolloweb.redsocial.Tools.Encoding;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class ProfileService {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    PhotoRepository photoRepository;
 
 
     @GetMapping(path = "/consult/profile/{iduser}")
@@ -36,12 +39,17 @@ public class ProfileService {
     private ResponseEntity<HashMap<String, String>> updateUser(@RequestBody User user, @PathVariable String id) {
         response.clear();
         try {
-
+            Photo photo = new Photo();
+            photo.setIdPhoto(user.getFotoIdFoto());
+            photo.setIpServer("10.1");
+            photo.setRoute("C:\\Users\\ricar\\OneDrive\\Escritorio\\TAREAS\\Desarrollo\\redsocial\\src\\assets");
+            photoRepository.save(photo);
             User userfind = userRepository.findByIdUser(id);
             userfind.setName(user.getName());
             userfind.setLastName(user.getLastName());
             userfind.setDob(user.getDob());
             userfind.setPassword(new Encoding().MD5(user.getPassword()));
+            userfind.setFotoIdFoto(user.getFotoIdFoto());
             userRepository.save(userfind);
             response.put("message", "Usuario actualizado");
             return ResponseEntity.ok(response);
