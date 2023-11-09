@@ -133,7 +133,6 @@ public class PublicationService {
             if (dataPublication != null) {
                 dataPublication.setModificationDate(new Date());
                 dataPublication.setDecription(publication.getDecription());
-                dataPublication.setPhotoIdPhoto(publication.getPhotoIdPhoto());
                 publicationRepository.save(dataPublication);
                 response.put("message", "Publicacion Modificada");
                 return ResponseEntity.ok(response);

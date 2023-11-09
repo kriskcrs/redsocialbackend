@@ -39,11 +39,7 @@ public class ProfileService {
     private ResponseEntity<HashMap<String, String>> updateUser(@RequestBody User user, @PathVariable String id) {
         response.clear();
         try {
-            Photo photo = new Photo();
-            photo.setIdPhoto(user.getFotoIdFoto());
-            photo.setIpServer("10.1");
-            photo.setRoute("C:\\Users\\ricar\\OneDrive\\Escritorio\\TAREAS\\Desarrollo\\redsocial\\src\\assets");
-            photoRepository.save(photo);
+            System.out.println("id de la foto -> "+user.getFotoIdFoto());
             User userfind = userRepository.findByIdUser(id);
             userfind.setName(user.getName());
             userfind.setLastName(user.getLastName());
@@ -59,6 +55,11 @@ public class ProfileService {
             return ResponseEntity.badRequest().body(response);
         }
     }
+
+
+
 }
+
+
 
 
