@@ -105,20 +105,33 @@ public class PublicationService {
     //Modifica Publicacion
     @PutMapping(path = "/modifyPublication/{id}")
     private ResponseEntity<HashMap<String, String>> modifyPublication(@PathVariable int id, @RequestBody Publication publication) {
-        Optional<Publication> dataPublication = Optional.ofNullable(publicationRepository.findByIdPublication(id));
-        if (dataPublication.isPresent()) {
-            if (publication != null) {
-                publication.setModificationDate(new Date());
-                publicationRepository.save(publication);
+        Publication dataPublication = publicationRepository.findByIdPublication(id);
+            if (dataPublication != null) {
+                dataPublication.setModificationDate(new Date());
+                dataPublication.setDecription(publication.getDecription());
+                dataPublication.setPhotoIdPhoto(publication.getPhotoIdPhoto());
+                publicationRepository.save(dataPublication);
                 response.put("message", "Publicacion Modificada");
                 return ResponseEntity.ok(response);
             } else {
                 response.put("message", "Llenar todos los campos");
                 return ResponseEntity.badRequest().body(response);
             }
+    }
+
+    //Modifica Publicacion
+    @PutMapping(path = "/modifyPublication/emoji/{id}/{emoji}")
+    private ResponseEntity<HashMap<String, String>> modifyPublicationEmoji(@PathVariable int id, @PathVariable int emoji) {
+        Publication dataPublication = publicationRepository.findByIdPublication(id);
+        if (dataPublication != null) {
+            dataPublication.setEmoji(emoji);
+            publicationRepository.save(dataPublication);
+            response.put("message", "Reaccion cambiada");
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("message", "No se pudo cambiar");
+            return ResponseEntity.badRequest().body(response);
         }
-        response.put("message", "No se pudo modificar");
-        return ResponseEntity.badRequest().body(response);
     }
 
 
