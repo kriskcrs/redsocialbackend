@@ -57,13 +57,13 @@ CREATE TABLE IF NOT EXISTS `redsocial`.`usuario` (
 -- Table `redsocial`.`publicacion`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `redsocial`.`publicacion` (
-                                                         `id_publicacion` INT NOT NULL AUTO_INCREMENT,
-                                                         `fecha_creacion` DATE NOT NULL,
-                                                         `fecha_modificacion` DATE NULL DEFAULT NULL,
-                                                         `usuario_id_usuario` VARCHAR(50) NOT NULL,
+    `id_publicacion` INT NOT NULL AUTO_INCREMENT,
+    `fecha_creacion` DATE NOT NULL,
+    `fecha_modificacion` DATE NULL DEFAULT NULL,
+    `usuario_id_usuario` VARCHAR(50) NOT NULL,
     `descripcion` VARCHAR(100) NULL DEFAULT NULL,
     `foto_id_foto` VARCHAR(50) NOT NULL,
-    `like` INT NULL,
+    `emoji` INT NULL,
     PRIMARY KEY (`id_publicacion`),
     INDEX `usuario_id_usuario` (`usuario_id_usuario` ASC) VISIBLE,
     INDEX `fk_publicacion_foto1_idx` (`foto_id_foto` ASC) VISIBLE,
@@ -83,8 +83,8 @@ CREATE TABLE IF NOT EXISTS `redsocial`.`publicacion` (
 -- Table `redsocial`.`comentario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `redsocial`.`comentario` (
-                                                        `id_comentario` INT NOT NULL AUTO_INCREMENT,
-                                                        `texto` VARCHAR(300) NOT NULL,
+    `id_comentario` INT NOT NULL AUTO_INCREMENT,
+    `texto` VARCHAR(300) NOT NULL,
     `publicacion_id_publicacion` INT NOT NULL,
     `usuario_id_usuario` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`id_comentario`),
