@@ -1,13 +1,11 @@
 package com.desarrolloweb.redsocial.Service;
 
 import com.desarrolloweb.redsocial.Entity.Photo;
-import com.desarrolloweb.redsocial.Entity.User;
 import com.desarrolloweb.redsocial.Repository.PhotoRepository;
 import com.desarrolloweb.redsocial.Repository.UserRepository;
 import com.desarrolloweb.redsocial.Tools.Encoding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,7 +44,8 @@ public class FileSystemService {
                 response.put("message", messageFailEmpty);
                 return ResponseEntity.badRequest().body(response);
             } else {
-
+                System.out.println(file);
+                System.out.println("viene a subir image");
                     // Generar un nombre de archivo único
                     String nameFile = String.valueOf(new Encoding().SessionManager());
                     String pathOrigin = path + "/original";
@@ -86,6 +85,7 @@ public class FileSystemService {
                     photoRepository.save(photo);
 
                     response.put("idImagen", String.valueOf(nameFile));
+                System.out.println(response);
                     return ResponseEntity.ok(response);
 
             }
