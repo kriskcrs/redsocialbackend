@@ -27,7 +27,7 @@ public class FileSystemService {
     HashMap<String, String> response = new HashMap<>();
     String messageFail = "Error al agregar archivo, revise la ruta";
     String messageFailEmpty = "Carga de archivo fallida. Por favor selecciona un archivo";
-    String userNotFound = "Pendejo el usuario no existe";
+
 
     @Autowired
     PhotoRepository photoRepository;
@@ -46,47 +46,47 @@ public class FileSystemService {
             } else {
                 System.out.println(file);
                 System.out.println("viene a subir image");
-                    // Generar un nombre de archivo único
-                    String nameFile = String.valueOf(new Encoding().SessionManager());
-                    String pathOrigin = path + "/original";
-                    String pathMedium = path + "/medium";
-                    String pathThumbnail = path + "/thumbnail";
+                // Generar un nombre de archivo único
+                String nameFile = String.valueOf(new Encoding().SessionManager());
+                String pathOrigin = path + "/original";
+                String pathMedium = path + "/medium";
+                String pathThumbnail = path + "/thumbnail";
 
-                    // Resuelve la ubicación de destino para la imagen original
-                    Path targetLocationOriginal = Paths.get(pathOrigin).resolve(nameFile);
+                // Resuelve la ubicación de destino para la imagen original
+                Path targetLocationOriginal = Paths.get(pathOrigin).resolve(nameFile);
 
-                    // Resuelve la ubicación de destino para la imagen de tamaño mediano
-                    Path targetLocationMedium = Paths.get(pathMedium).resolve(nameFile);
+                // Resuelve la ubicación de destino para la imagen de tamaño mediano
+                Path targetLocationMedium = Paths.get(pathMedium).resolve(nameFile);
 
-                    // Resuelve la ubicación de destino para la imagen en miniatura
-                    Path targetLocationThumbnail = Paths.get(pathThumbnail).resolve(nameFile);
+                // Resuelve la ubicación de destino para la imagen en miniatura
+                Path targetLocationThumbnail = Paths.get(pathThumbnail).resolve(nameFile);
 
-                    // Guarda la imagen original en la ubicación de destino original
-                    Files.copy(file.getInputStream(), targetLocationOriginal, StandardCopyOption.REPLACE_EXISTING);
+                // Guarda la imagen original en la ubicación de destino original
+                Files.copy(file.getInputStream(), targetLocationOriginal, StandardCopyOption.REPLACE_EXISTING);
 
-                    // Carga la imagen original utilizando la biblioteca Pillow
-                    BufferedImage originalImage = ImageIO.read(targetLocationOriginal.toFile());
+                // Carga la imagen original utilizando la biblioteca Pillow
+                BufferedImage originalImage = ImageIO.read(targetLocationOriginal.toFile());
 
-                    // Redimensiona la imagen original a un tamaño mediano
-                    BufferedImage mediumImage = resizeImage(originalImage, 800, 600);
+                // Redimensiona la imagen original a un tamaño mediano
+                BufferedImage mediumImage = resizeImage(originalImage, 800, 600);
 
-                    // Redimensiona la imagen original a un tamaño de miniatura
-                    BufferedImage thumbnailImage = resizeImage(originalImage, 100, 75);
+                // Redimensiona la imagen original a un tamaño de miniatura
+                BufferedImage thumbnailImage = resizeImage(originalImage, 100, 75);
 
-                    // Guarda las imágenes redimensionadas en las ubicaciones correspondientes
-                    ImageIO.write(mediumImage, "jpg", targetLocationMedium.toFile());
-                    ImageIO.write(thumbnailImage, "jpg", targetLocationThumbnail.toFile());
+                // Guarda las imágenes redimensionadas en las ubicaciones correspondientes
+                ImageIO.write(mediumImage, "jpg", targetLocationMedium.toFile());
+                ImageIO.write(thumbnailImage, "jpg", targetLocationThumbnail.toFile());
 
-                    Photo photo = new Photo();
-                    photo.setIdPhoto(nameFile);
-                    photo.setRoute(path);
-                    photo.setIpServer(server);
+                Photo photo = new Photo();
+                photo.setIdPhoto(nameFile);
+                photo.setRoute(path);
+                photo.setIpServer(server);
 
-                    photoRepository.save(photo);
+                photoRepository.save(photo);
 
-                    response.put("idImagen", String.valueOf(nameFile));
+                response.put("idImagen", String.valueOf(nameFile));
                 System.out.println(response);
-                    return ResponseEntity.ok(response);
+                return ResponseEntity.ok(response);
 
             }
         } catch (Exception e) {
@@ -103,9 +103,6 @@ public class FileSystemService {
         g.dispose();
         return resizedImage;
     }
-
-
-
 
 
 }

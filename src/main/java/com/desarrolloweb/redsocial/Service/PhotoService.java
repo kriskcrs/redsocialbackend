@@ -17,16 +17,13 @@ public class PhotoService {
     PhotoRepository photoRepository;
 
 
-
-    @GetMapping (path = "/photos")
-    private List<Photo> photoList(){
+    @GetMapping(path = "/photos")
+    private List<Photo> photoList() {
         return photoRepository.findAll();
     }
 
     @PostMapping(path = "/upPhoto")
-    private Photo photoCreate(@RequestBody Photo photo){
-
-
+    private Photo photoCreate(@RequestBody Photo photo) {
 
 
         return photoRepository.save(photo);

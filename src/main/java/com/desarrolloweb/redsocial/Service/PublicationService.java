@@ -3,7 +3,6 @@ package com.desarrolloweb.redsocial.Service;
 import com.desarrolloweb.redsocial.Entity.*;
 import com.desarrolloweb.redsocial.Repository.CommentRepository;
 import com.desarrolloweb.redsocial.Repository.PhotoRepository;
-import com.desarrolloweb.redsocial.Tools.Encoding;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +10,6 @@ import java.util.*;
 
 import com.desarrolloweb.redsocial.Repository.PublicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,7 +63,7 @@ public class PublicationService {
         List<Photo> photoList = photoRepository.findAll();
         List<PublicationPhoto> publicationPhotosList = new ArrayList<>();
         try {
-            if(publication != null){
+            if (publication != null) {
                 for (Photo photo : photoList) {
                     if (photo.getIdPhoto().equals(publication.getPhotoIdPhoto())) {
                         PublicationPhoto publicationPhoto = new PublicationPhoto();
@@ -75,13 +73,12 @@ public class PublicationService {
                     }
                 }
                 return ResponseEntity.ok(publicationPhotosList);
-            }
-            else{
+            } else {
                 return ResponseEntity.noContent().build();
             }
         } catch (Exception e) {
             System.out.println("error -> " + e.getCause());
-            response.put("message","valores invalidos");
+            response.put("message", "valores invalidos");
             return ResponseEntity.badRequest().build();
         }
 
@@ -94,8 +91,7 @@ public class PublicationService {
         List<Publication> publicationList = publicationRepository.findAll();
         List<Publication> publicationUserList = new ArrayList<>();
         try {
-            for (Publication publication: publicationList)
-            {
+            for (Publication publication : publicationList) {
                 if (publication.getUserIdUser().equals(id)) {
                     publicationUserList.add(publication);
                 }
@@ -103,12 +99,11 @@ public class PublicationService {
             return ResponseEntity.ok(publicationUserList);
         } catch (Exception e) {
             System.out.println("error -> " + e.getCause());
-            response.put("message","valores invalidos");
+            response.put("message", "valores invalidos");
             return ResponseEntity.badRequest().build();
         }
 
     }
-
 
 
     //Crea  publicacion
@@ -130,16 +125,16 @@ public class PublicationService {
     @PutMapping(path = "/modifyPublication/{id}")
     private ResponseEntity<HashMap<String, String>> modifyPublication(@PathVariable int id, @RequestBody Publication publication) {
         Publication dataPublication = publicationRepository.findByIdPublication(id);
-            if (dataPublication != null) {
-                dataPublication.setModificationDate(new Date());
-                dataPublication.setDecription(publication.getDecription());
-                publicationRepository.save(dataPublication);
-                response.put("message", "Publicacion Modificada");
-                return ResponseEntity.ok(response);
-            } else {
-                response.put("message", "Llenar todos los campos");
-                return ResponseEntity.badRequest().body(response);
-            }
+        if (dataPublication != null) {
+            dataPublication.setModificationDate(new Date());
+            dataPublication.setDecription(publication.getDecription());
+            publicationRepository.save(dataPublication);
+            response.put("message", "Publicacion Modificada");
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("message", "Llenar todos los campos");
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
     //Modifica Publicacion
@@ -162,9 +157,9 @@ public class PublicationService {
     @DeleteMapping(path = "/delete/publication/{id}")
     private ResponseEntity<HashMap<String, String>> deletePublication(@PathVariable int id) {
         response.clear();
-        List<Comment> comments =  commentRepository.findCommentByIdPublication(id);
-        for (Comment c:comments
-             ) {
+        List<Comment> comments = commentRepository.findCommentByIdPublication(id);
+        for (Comment c : comments
+        ) {
             commentRepository.delete(c);
         }
         publicationRepository.deleteById(id);

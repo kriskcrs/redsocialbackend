@@ -39,7 +39,7 @@ public class ProfileService {
     private ResponseEntity<HashMap<String, String>> updateUser(@RequestBody User user, @PathVariable String id) {
         response.clear();
         try {
-            System.out.println("id de la foto -> "+user.getFotoIdFoto());
+            System.out.println("id de la foto -> " + user.getFotoIdFoto());
             User userfind = userRepository.findByIdUser(id);
             userfind.setName(user.getName());
             userfind.setLastName(user.getLastName());
@@ -50,12 +50,11 @@ public class ProfileService {
             response.put("message", "Usuario actualizado");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            System.out.println("error por "+ e.getCause());
+            System.out.println("error por " + e.getCause());
             response.put("message", "error al actualizar usuario");
             return ResponseEntity.badRequest().body(response);
         }
     }
-
 
 
 }
